@@ -96,13 +96,13 @@ The project summary shows 51 work items: 27 completed requirements and 24 open d
 
 ### BUG-14 — Seat Completion Validation
 
-The booking contains two seat-holding passengers, while only the first passenger has seat 1D assigned.
+The Jira defect record documents the priority, reproduction steps, expected result, actual result, and traceability to `US-4.2` and `TC-4.2-01`.
 
-![BUG-14 passenger tabs and single seat assignment](screenshots/BUG-14-passenger-tabs-and-single-seat.png)
+![BUG-14 details and results](screenshots/BUG-14-details-and-results.png)
 
-Despite the counter showing `1/2 seated`, the **Continue to extras** button is enabled. It should remain disabled until every seat-holding passenger has an assigned seat.
+The evidence view shows the professionally named attachments and the linked requirement, including its `Done` status and `Highest` priority.
 
-![BUG-14 continue button enabled at one of two seated](screenshots/BUG-14-continue-enabled-at-1-of-2-seated.png)
+![BUG-14 attachments and story traceability](screenshots/BUG-14-attachments-and-story-traceability.png)
 
 ## Notes
 
