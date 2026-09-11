@@ -1,0 +1,41 @@
+# SkyBook Traceability Matrix
+
+| Epic | Story | TC | Result | Bug |
+| --- | --- | --- | --- | --- |
+| Epic 1 — FLIGHT SEARCH | US-1.1 | TC-1.1-01 | PASS | — |
+| Epic 1 — FLIGHT SEARCH | US-1.1 | TC-1.1-02 | FAIL | BUG-01 |
+| Epic 1 — FLIGHT SEARCH | US-1.1 | TC-1.1-03 | PASS | — |
+| Epic 1 — FLIGHT SEARCH | US-1.1 | TC-1.1-04 | FAIL | BUG-02 |
+| Epic 1 — FLIGHT SEARCH | US-1.1 | TC-1.1-05 | FAIL | BUG-03 |
+| Epic 1 — FLIGHT SEARCH | US-1.1 | TC-1.1-06 | FAIL | BUG-04 |
+| Epic 1 — FLIGHT SEARCH | US-1.2 | TC-1.2-01 | FAIL | BUG-04 |
+| Epic 1 — FLIGHT SEARCH | US-1.2 | TC-1.2-02 | FAIL | BUG-05 |
+| Epic 1 — FLIGHT SEARCH | US-1.2 | TC-1.2-03 | PASS | — |
+| Epic 2 — SEARCH RESULTS | US-2.1 | TC-2.1-01 | FAIL | BUG-06 |
+| Epic 2 — SEARCH RESULTS | US-2.1 | TC-2.1-02 | PASS | — |
+| Epic 2 — SEARCH RESULTS | US-2.1 | TC-2.1-03 | PASS | — |
+| Epic 2 — SEARCH RESULTS | US-2.2 | TC-2.2-01 | FAIL | BUG-07 |
+| Epic 2 — SEARCH RESULTS | US-2.2 | TC-2.2-02 | PASS | — |
+| Epic 2 — SEARCH RESULTS | US-2.3 | TC-2.3-01 | PASS | — |
+| Epic 3 — PASSENGER DETAILS | US-3.1 | TC-3.1-01 | PASS | — |
+| Epic 3 — PASSENGER DETAILS | US-3.1 | TC-3.1-02 | FAIL | BUG-08, BUG-09 |
+| Epic 3 — PASSENGER DETAILS | US-3.2 | TC-3.2-01 | PASS | — |
+| Epic 3 — PASSENGER DETAILS | US-3.2 | TC-3.2-02 | FAIL | BUG-10, BUG-11 |
+| Epic 3 — PASSENGER DETAILS | US-3.3 | TC-3.3-01 | PASS | — |
+| Epic 3 — PASSENGER DETAILS | US-3.3 | TC-3.3-02 | FAIL | BUG-12 |
+| Epic 4 — SEAT SELECTION | US-4.1 | TC-4.1-01 | FAIL | BUG-13 |
+| Epic 4 — SEAT SELECTION | US-4.1 | TC-4.1-02 | PASS | — |
+| Epic 4 — SEAT SELECTION | US-4.2 | TC-4.2-01 | FAIL | BUG-14 |
+| Epic 5 — EXTRAS & PROMO CODES | US-5.1 | TC-5.1-01 | FAIL | BUG-15, BUG-16 |
+| Epic 5 — EXTRAS & PROMO CODES | US-5.2 | TC-5.2-01 | PASS | — |
+| Epic 5 — EXTRAS & PROMO CODES | US-5.3 | TC-5.3-01 | PASS | — |
+| Epic 5 — EXTRAS & PROMO CODES | US-5.4 | TC-5.4-01 | FAIL | BUG-17 |
+| Epic 5 — EXTRAS & PROMO CODES | US-5.4 | TC-5.4-02 | FAIL | BUG-18 |
+| Epic 5 — EXTRAS & PROMO CODES | US-5.4 | TC-5.4-03 | FAIL | BUG-19 |
+| Epic 6 — PAYMENT | US-6.1 | TC-6.1-01 | PASS | — |
+| Epic 6 — PAYMENT | US-6.1 | TC-6.1-02 | FAIL | BUG-20, BUG-21, BUG-22 |
+| Epic 6 — PAYMENT | US-6.2 | TC-6.2-01 | FAIL | BUG-23 |
+| Epic 6 — PAYMENT | US-6.3 | TC-6.3-01 | BLOCKED | — |
+| Epic 7 — CONFIRMATION & HISTORY | US-7.1 | TC-7.1-01 | PASS | — |
+| Epic 7 — CONFIRMATION & HISTORY | US-7.2 | TC-7.2-01 | PASS | — |
+| Epic 7 — CONFIRMATION & HISTORY | US-7.3 | TC-7.3-01 | FAIL | BUG-24 |

@@ -1,0 +1,194 @@
+Test Case ID,Story,Title,Preconditions,Test Data,Steps,Expected Result,Actual Result,Status,Bug IDs
+TC-1.1-01,US-1.1,Search with different valid origin and destination cities,"1. SkyBook is accessible.
+2. The user is on the Flight Search page.
+3. The flight search form is displayed.","Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 0 Children, 0 Infants.","1. Opened the supplied live URL and inspected the Flight Search form.
+2. Kept the displayed VLM origin and HDX destination; selected One way.
+3. Used the displayed future departure 2026-09-28, 1 Adult and Economy.
+4. Clicked Search flights and inspected the outbound results.",The search is submitted successfully and available one-way flights from VLM to HDX matching the selected criteria are displayed.,"Search advanced to “Choose your outbound flight” for Vellamar (VLM) to Halden Cross (HDX), Mon, Sep 28. Six flight results were displayed; the itinerary showed One-way, 1 passenger(s), Economy.",PASS,
+TC-1.1-02,US-1.1,Reject search when origin and destination are the same,"1. SkyBook is accessible.
+2. The user is on the Flight Search page.
+3. The flight search form is displayed.","Vellamar (VLM) → Vellamar (VLM); one-way; departure 2026-09-28; Economy; 1 Adult, 0 Children, 0 Infants.","1. Reloaded to a clean search form.
+2. Kept Vellamar as origin and selected Vellamar as destination.
+3. Selected One way; used 2026-09-28, 1 Adult and Economy.
+4. Clicked Search flights.",The search is blocked and the user is clearly informed that the origin and destination cannot be the same.,The application accepted Vellamar as both origin and destination and displayed six VLM-to-VLM flights. No same-city validation was displayed.,FAIL,BUG-01
+TC-1.1-03,US-1.1,Search a valid round-trip,"1. SkyBook is accessible.
+2. The user is on the Flight Search page.
+3. The flight search form is displayed.",VLM → HDX; Round trip; departure 2026-09-27; return 2026-10-04; 1 Adult; Economy.,"1. Returned to search and restored HDX destination and Round trip.
+2. Entered departure 2026-09-27 and return 2026-10-04; kept 1 Adult and Economy.
+3. Clicked Search flights and inspected outbound results.
+4. Selected outbound AeroLuna AL 856 to reveal and inspect the return results.","The search is submitted successfully, and available outbound and return flights between VLM and HDX matching the selected travel dates and criteria are displayed.","Outbound flights were displayed for VLM→HDX on Sun, Sep 27. After selecting AL 856, return flights were displayed for HDX→VLM on Sun, Oct 4.",PASS,
+TC-1.1-04,US-1.1,Reject return date before departure date,"1. SkyBook is accessible.
+2. The user is on the Flight Search page.
+3. Round-trip is selected.",VLM → HDX; Round trip; departure 2026-09-30; return 2026-09-20; 1 Adult; Economy.,"1. Returned to the search form.
+2. Entered departure 2026-09-30 and return 2026-09-20.
+3. Clicked Search flights and inspected the resulting itinerary.","The search is blocked because the return date is earlier than the departure date, and clear validation is displayed.","Search proceeded to outbound results even though the return date preceded departure. The itinerary displayed “Wed, Sep 30 · Return Sun, Sep 20”; no date-order validation appeared.",FAIL,BUG-02
+TC-1.1-05,US-1.1,Reject travel dates earlier than today,"1. SkyBook is accessible.
+2. The flight search form is displayed.","Execution date: 2026-09-07 (Asia/Riyadh). VLM→HDX, Round trip, 1 Adult, Economy. A: depart 2026-09-01, return 2026-10-05. B: depart 2026-09-28, return 2026-09-01.","1. Returned to search; entered dataset A and clicked Search flights.
+2. Recorded the results and returned to search.
+3. Replaced both dates with dataset B and clicked Search flights.
+4. Recorded the resulting itinerary and absence of validation.",Departure and return dates earlier than today cannot be used for a flight search. Invalid searches are blocked with clear validation.,"Both past-date searches proceeded to flight results. Dataset A displayed outbound flights for Tue, Sep 1; dataset B displayed an itinerary with Mon, Sep 28 departure and Tue, Sep 1 return. Neither search displayed past-date validation.",FAIL,BUG-03
+TC-1.1-06,US-1.1,Reject search with zero adults,"1. SkyBook is accessible.
+2. The flight search form is displayed.",VLM→HDX; Round trip; depart 2026-09-28; return 2026-10-05; Economy; Adults changed 1→0; Children 0; Infants 0.,"1. Returned to search and restored a valid return date.
+2. Clicked the Adult minus control once.
+3. Observed 0 Adults and 0 passenger(s) selected.
+4. Clicked Search flights.",The search is blocked unless at least one adult passenger is selected.,The Adult count decreased to 0 and Search flights still opened outbound results. The results itinerary showed “0 passenger(s) · Economy”; no adult-minimum validation appeared.,FAIL,BUG-04
+TC-1.2-01,US-1.2,Enforce passenger count boundaries,"1. SkyBook is accessible.
+2. Passenger selector is available.","Round trip VLM→HDX, 2026-09-28 / 2026-10-05, Economy. Adults tested 1→0→9, then attempted 10; Children 0→9, attempted 10; Infants 0→9, attempted 10.","1. Restored Adults to 1 on the search form; passenger controls were already displayed.
+2. Clicked Adult minus and observed 0.
+3. Clicked Adult plus nine times to reach 9, then once more.
+4. Verified Children at 0; clicked Child plus nine times and once more.
+5. Verified Infants at 0; clicked Infant plus nine times and once more.
+6. Reloaded afterwards to clear the boundary-test counts.","Adults remain within 1–9.
+Children remain within 0–9.
+Infants remain within 0–9.
+Values outside the permitted ranges cannot be selected.","Adults could be reduced below the required minimum to 0. Adults, Children and Infants each reached 9 and remained at 9 after another plus click. Children and Infants both supported 0.",FAIL,BUG-04
+TC-1.2-02,US-1.2,Prevent infants from exceeding adults,1. Passenger selector is displayed.,"VLM→HDX; Round trip; 2026-09-28 / 2026-10-05; Economy; 1 Adult, 0 Children, 2 Infants.","1. Started from the reloaded 1 Adult / 0 Child / 0 Infant form.
+2. Clicked Infant plus twice.
+3. Observed 2 Infants with 1 Adult, then clicked Search flights.",The system prevents or clearly rejects an infant count greater than the adult count.,The UI allowed 2 Infants with only 1 Adult and proceeded to outbound results without validation.,FAIL,BUG-05
+TC-1.2-03,US-1.2,Carry selected cabin through pricing,1. A valid flight search can be performed.,"Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 0 Children, 0 Infants. Three cabin datasets: Economy, Premium Economy, Business.","1. Returned to search, removed both infants, and selected One way.
+2. Searched Economy and recorded the cabin and all displayed prices.
+3. Returned to search, selected Premium Economy, searched and recorded prices.
+4. Returned to search, selected Business, searched and recorded prices.","Economy, Premium Economy and Business can be selected and the selected cabin carries through correctly to flight pricing.",All three cabins could be selected and each results itinerary retained the selected cabin. Displayed flight pricing changed for each cabin dataset.,PASS,
+TC-2.1-01,US-2.1,Sort flights by price low to high,1. Flight results containing multiple prices are displayed.,"Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 0 Children, 0 Infants. Sort: Price: low to high.","1. Returned to search and restored Economy; submitted the search.
+2. Explicitly selected Price: low to high.
+3. Recorded all six prices top-to-bottom and compared numerically.",Flights are ordered numerically from lowest to highest price.,"Price sorting displayed $1,022, $1,350, $105, $491, $595 and $636 in that order. This is not numeric ascending order because $105 follows $1,350.",FAIL,BUG-06
+TC-2.1-02,US-2.1,Sort flights by shortest duration,1. Multiple flight results with different durations are displayed.,"Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 0 Children, 0 Infants. Sort: Duration: shortest.","1. Selected Duration: shortest on the full results list.
+2. Recorded and compared every displayed duration.",Flights are ordered from shortest to longest duration.,"The six durations were displayed in ascending order: 3h 12m, 3h 16m, 3h 40m, 4h 18m, 5h 11m and 8h 16m.",PASS,
+TC-2.1-03,US-2.1,Sort flights by earliest departure,1. Multiple flight results with different departure times are displayed.,"Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 0 Children, 0 Infants. Sort: Departure: earliest.","1. Selected Departure: earliest.
+2. Recorded and compared all six departure times.",Flights are ordered from earliest to latest departure.,"Departure times were ordered chronologically: 05:40, 09:45, 17:25, 20:45, 21:45 and 22:10.",PASS,
+TC-2.2-01,US-2.2,Display only nonstop flights,1. Results contain nonstop and connecting flights.,"Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 0 Children, 0 Infants. Sort: Departure: earliest; Nonstop only enabled.","1. Verified the full list contained nonstop, one-stop and two-stop flights.
+2. Enabled Nonstop only.
+3. Inspected the stops values of every remaining flight.",Only flights with zero stops are displayed.,The filter removed the two-stop flight but retained two one-stop flights alongside three nonstop flights. AL 457 and NS 261 remained visible despite Nonstop only being checked.,FAIL,BUG-07
+TC-2.2-02,US-2.2,Restore results after disabling Nonstop filter,"1. Flight results are displayed.
+2. A sorting option can be selected.","Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 0 Children, 0 Infants. Sort: Duration: shortest; Nonstop toggled off→on→off.","1. Disabled the previous filter, selected Duration: shortest and recorded the full list.
+2. Enabled Nonstop only and recorded the reduced list.
+3. Disabled Nonstop only and compared the restored list and selected sort.",The full flight list is restored and the current sorting option remains applied.,Disabling the filter restored all six flights in the original duration order. Duration: shortest remained selected.,PASS,
+TC-2.3-01,US-2.3,Display complete flight details and low availability,1. Flight search results are displayed.,"Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 0 Children, 0 Infants. Six Economy results, including AL 168 and AL 457 with 2 seats left.","1. Inspected all six result entries for departure, arrival, duration, stops, airline, flight number, aircraft and seats remaining.
+2. Scrolled the rendered page and visually inspected the low-availability styling.","Each result displays departure, arrival, duration, stops, airline, flight number, aircraft and seats remaining.
+Flights with 3 or fewer seats remaining are visually identified as low availability.","Each result displayed all required flight details. AL 168 and AL 457 displayed “Only 2 left”; the inspected AL 168 availability text was highlighted in amber, unlike the ordinary seats-left text.",PASS,
+TC-3.1-01,US-3.1,Accept valid lead contact details,1. Passenger Details page is displayed.,"Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 0 Children, 0 Infants. CJ 101. Test User (Adult), DOB 1990-01-15, passport QA1234567, expiry 2030-12-31, email rahaf.test@example.com, phone 0791234567. Synthetic QA identity.","1. Selected CJ 101 to open Passenger details.
+2. Entered rahaf.test@example.com and 0791234567.
+3. Completed name, DOB, passport number and expiry with the listed valid data.
+4. Clicked Continue to seats.",The valid email and realistic phone number are accepted and the user can continue.,"The email and phone were accepted, and the application advanced to Seat selection with a Test User passenger tab.",PASS,
+TC-3.1-02,US-3.1,Reject invalid email and phone,1. Passenger Details page is displayed.,"Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 0 Children, 0 Infants. CJ 101. Test User (Adult), DOB 1990-01-15, passport QA1234567, expiry 2030-12-31, email rahaf.test@example.com, phone 0791234567. Synthetic QA identity. A: email replaced with rahaf@; valid phone retained. B: email restored; phone replaced with 123456.","1. Returned from seats to the otherwise valid passenger form.
+2. Entered dataset A and clicked Continue to seats; recorded the result.
+3. Returned to Passenger details, restored the valid email and entered dataset B.
+4. Clicked Continue to seats and recorded the result.","An email without a valid domain/TLD is rejected.
+A phone number shorter than 7 digits is rejected.
+Clear validation is displayed for each invalid input.",Both invalid contact datasets advanced to Seat selection. Email rahaf@ and six-digit phone 123456 were accepted without email or phone validation.,FAIL,"BUG-08, BUG-09"
+TC-3.2-01,US-3.2,Accept valid DOB matching passenger type,1. Passenger Details page is displayed.,"Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 0 Children, 0 Infants. CJ 101. Test User (Adult), DOB 1990-01-15, passport QA1234567, expiry 2030-12-31, email rahaf.test@example.com, phone 0791234567. Synthetic QA identity.","1. Returned to Passenger details and restored the valid phone.
+2. Identified Passenger 1 as ADULT and entered DOB 1990-01-15.
+3. Kept the other valid fields and clicked Continue to seats.",The DOB is accepted because it is not in the future and the calculated age matches the passenger type.,DOB 1990-01-15 was accepted for the Adult passenger and the application advanced to Seat selection.,PASS,
+TC-3.2-02,US-3.2,Reject invalid DOB,1. Passenger Details page is displayed.,"Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 0 Children, 0 Infants. CJ 101. Test User (Adult), DOB 1990-01-15, passport QA1234567, expiry 2030-12-31, email rahaf.test@example.com, phone 0791234567. Synthetic QA identity. A: DOB 2027-01-15. B: DOB 2020-01-15 for the same Adult passenger.","1. Returned to the valid passenger form and entered future DOB 2027-01-15.
+2. Clicked Continue to seats and recorded the result.
+3. Returned to Passenger details and changed DOB to 2020-01-15.
+4. Clicked Continue to seats and recorded the result.","A future DOB is rejected.
+A DOB whose calculated age is inconsistent with the passenger type is rejected.
+Clear validation is displayed.",Both the future DOB and the DOB corresponding to age 6 were accepted for Passenger 1 ADULT LEAD. Each submission advanced to Seat selection without DOB validation.,FAIL,"BUG-10, BUG-11"
+TC-3.3-01,US-3.3,Accept passport valid beyond travel,"1. Passenger/passport details are displayed.
+2. Travel dates are known.","Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 0 Children, 0 Infants. CJ 101. Test User (Adult), DOB 1990-01-15, passport QA1234567, expiry 2030-12-31, email rahaf.test@example.com, phone 0791234567. Synthetic QA identity.","1. Returned to Passenger details and restored DOB 1990-01-15.
+2. Entered passport expiry 2030-12-31, after the 2026-09-28 outbound trip.
+3. Clicked Continue to seats.",The passport expiry is accepted and the user can continue.,Passport expiry 2030-12-31 was accepted and the application advanced to Seat selection.,PASS,
+TC-3.3-02,US-3.3,Reject passport expiring before travel completion,"1. Passenger/passport details are displayed.
+2. Travel dates are known.","Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 0 Children, 0 Infants. CJ 101. Test User (Adult), DOB 1990-01-15, passport QA1234567, expiry 2030-12-31, email rahaf.test@example.com, phone 0791234567. Synthetic QA identity. Passport expiry replaced with 2026-09-20.","1. Returned to the otherwise valid passenger form.
+2. Entered passport expiry 2026-09-20, before outbound travel on 2026-09-28.
+3. Clicked Continue to seats.",The user cannot continue and clear passport-expiry validation is displayed.,The application accepted passport expiry 2026-09-20 and advanced to Seat selection even though travel was on 2026-09-28. No expiry validation appeared.,FAIL,BUG-12
+TC-4.1-01,US-4.1,Prevent occupied and duplicate seat assignment,"1. Seat map is displayed.
+2. Booking contains at least two seat-holding passengers.","Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 1 Child, 1 Infant. Selected CJ 101, CoastJet Regional, 09:45–12:57, A319, $1,022 per adult. Test User (Adult), DOB 1990-01-15, passport QA1234567, expiry 2030-12-31, email rahaf.test@example.com, phone 0791234567. Synthetic QA identity. Test Child (Child), DOB 2016-01-15, passport QC1234567, expiry 2030-12-31. Test Infant (Infant), DOB 2025-12-01; no infant passport fields displayed. Occupied seat tested: 6A. Duplicate seat tested: 1A.","1. Reloaded and created the listed Adult/Child/Infant booking; filled valid passenger details.
+2. Inspected the seat map and legend, identified grey occupied seat 6A and clicked it.
+3. Observed no seat assignment, then selected available seat 1A for Test User.
+4. Selected Test Child and clicked map seat 1A already assigned to Test User.","An occupied seat cannot be selected.
+The same seat cannot be assigned to more than one passenger.","Occupied seat 6A could not be assigned: the count remained 0/2. However, seat 1A was assigned to both Test User and Test Child simultaneously, and the count became 2/2.",FAIL,BUG-13
+TC-4.1-02,US-4.1,Release previous seat when changing selection,"1. Seat map is displayed.
+2. A passenger can select an available seat.","Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 1 Child, 1 Infant. Selected CJ 101, CoastJet Regional, 09:45–12:57, A319, $1,022 per adult. Test User (Adult), DOB 1990-01-15, passport QA1234567, expiry 2030-12-31, email rahaf.test@example.com, phone 0791234567. Synthetic QA identity. Test Child (Child), DOB 2016-01-15, passport QC1234567, expiry 2030-12-31. Test Infant (Infant), DOB 2025-12-01; no infant passport fields displayed. Adult Seat A 1A → Seat B 1E; Child first moved to separate seat 1C.","1. Removed the prior duplicate by changing Test Child to 1C.
+2. Verified Test User still held 1A.
+3. Selected Test User and changed the seat to available 1E.
+4. Inspected the settled map and passenger tabs.",Seat B becomes assigned to the passenger and the previously selected Seat A becomes available again.,Test User’s seat changed from 1A to 1E. Seat 1E was highlighted as the current passenger’s seat; 1A returned to the available styling. The child retained 1C.,PASS,
+TC-4.2-01,US-4.2,Require seats for all seat-holding passengers,"1. Booking contains 1 Adult, 1 Child and 1 Infant.
+2. Seat Selection page is displayed.","Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 1 Child, 1 Infant. Selected CJ 101, CoastJet Regional, 09:45–12:57, A319, $1,022 per adult. Test User (Adult), DOB 1990-01-15, passport QA1234567, expiry 2030-12-31, email rahaf.test@example.com, phone 0791234567. Synthetic QA identity. Test Child (Child), DOB 2016-01-15, passport QC1234567, expiry 2030-12-31. Test Infant (Infant), DOB 2025-12-01; no infant passport fields displayed. Fresh seat selections: Adult 1A, Child 1C.","1. Reloaded and recreated the listed booking with no seats assigned.
+2. Recorded the initial seated count and Continue state.
+3. Assigned only Adult 1A and recorded count/Continue state.
+4. Selected Test Child, assigned 1C and recorded count/Continue state.
+5. Verified no Infant seat tab or requirement was displayed.","The Infant is excluded from the required seat count.
+Continue remains disabled until both the Adult and Child have seats.
+The remaining-unassigned count is accurate at every stage.","The infant was excluded and counts progressed accurately from 0/2 to 1/2 to 2/2. Continue was disabled at 0/2 but became enabled at 1/2, before the child had a seat.",FAIL,BUG-14
+TC-5.1-01,US-5.1,Enforce baggage quantity boundaries,"1. Extras page is displayed.
+2. Extra baggage control is available.","Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 1 Child, 1 Infant. Selected CJ 101, CoastJet Regional, 09:45–12:57, A319, $1,022 per adult. Test User (Adult), DOB 1990-01-15, passport QA1234567, expiry 2030-12-31, email rahaf.test@example.com, phone 0791234567. Synthetic QA identity. Test Child (Child), DOB 2016-01-15, passport QC1234567, expiry 2030-12-31. Test Infant (Infant), DOB 2025-12-01; no infant passport fields displayed. Extras baseline: 0 bags, meals None, insurance off, no promo. Baggage tested −1 through 20.","1. Entered Extras with 0 bags and total $2,958.00.
+2. Clicked minus once and recorded −1 bag and price.
+3. Clicked plus repeatedly: 10 clicks reached 9, then 11 more reached 20.
+4. Stopped at 20 as an unreasonable quantity for two seat-holding passengers; recorded the highest tested value.
+5. Decreased baggage 20 times back to 0 before later tests.","Baggage quantity cannot be less than 0.
+A sane upper limit is enforced per passenger.","The quantity decreased below zero to −1, producing a −$35 baggage line and total $2,923. It also reached 20 bags with a $700 baggage charge and total $3,658 without preventing increases. No upper limit was reached in the tested range.",FAIL,"BUG-15, BUG-16"
+TC-5.2-01,US-5.2,Select meals independently per passenger,"1. Extras page is displayed.
+2. Booking contains multiple passengers.","Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 1 Child, 1 Infant. Selected CJ 101, CoastJet Regional, 09:45–12:57, A319, $1,022 per adult. Test User (Adult), DOB 1990-01-15, passport QA1234567, expiry 2030-12-31, email rahaf.test@example.com, phone 0791234567. Synthetic QA identity. Test Child (Child), DOB 2016-01-15, passport QC1234567, expiry 2030-12-31. Test Infant (Infant), DOB 2025-12-01; no infant passport fields displayed. Baggage reset to 0; no promo or insurance. Meal sequence: all None; Adult Standard; Child Vegetarian; Adult Vegan; Infant Standard.","1. Inspected all three meal dropdowns and their four options.
+2. Selected Adult Standard; recorded the other passengers still at None and $12 meal charge.
+3. Selected Child Vegetarian; recorded $24 total meals.
+4. Changed Adult to Vegan; verified Child remained Vegetarian and Infant remained None.
+5. Selected Infant Standard; recorded $36 meals, then reset all meals to None.","Each passenger can independently select None, Standard, Vegetarian or Vegan without affecting another passenger's selection.","Each passenger had None, Standard, Vegetarian and Vegan options. Changing the Adult meal did not alter the Child or Infant selections. Each selected non-None meal added $12, and three meals totaled $36.",PASS,
+TC-5.3-01,US-5.3,Add travel insurance to booking price,"1. Extras page is displayed.
+2. Insurance option is available.","Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 1 Child, 1 Infant. Selected CJ 101, CoastJet Regional, 09:45–12:57, A319, $1,022 per adult. Test User (Adult), DOB 1990-01-15, passport QA1234567, expiry 2030-12-31, email rahaf.test@example.com, phone 0791234567. Synthetic QA identity. Test Child (Child), DOB 2016-01-15, passport QC1234567, expiry 2030-12-31. Test Infant (Infant), DOB 2025-12-01; no infant passport fields displayed. 0 bags; all meals None; no promo; insurance off→on.","1. Restored all meals to None and recorded total $2,958.
+2. Enabled the Travel insurance checkbox.
+3. Inspected the insurance line and total.","Travel insurance is added as a flat-rate opt-in charge, appears in the price and is included exactly once.","Enabling insurance added one $19 charge. The breakdown showed Travel insurance $19.00 and total $2,977.00, exactly $19 above the $2,958.00 baseline.",PASS,
+TC-5.4-01,US-5.4,Apply valid promo code exactly once,1. Promo code field is displayed.,"Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 1 Child, 1 Infant. Selected CJ 101, CoastJet Regional, 09:45–12:57, A319, $1,022 per adult. Test User (Adult), DOB 1990-01-15, passport QA1234567, expiry 2030-12-31, email rahaf.test@example.com, phone 0791234567. Synthetic QA identity. Test Child (Child), DOB 2016-01-15, passport QC1234567, expiry 2030-12-31. Test Infant (Infant), DOB 2025-12-01; no infant passport fields displayed. 0 bags; meals None; insurance off; SAVE10 applied three times.","1. Disabled insurance and recorded undiscounted total $2,958.
+2. Entered SAVE10 and clicked Apply; recorded discount and total.
+3. Clicked Apply a second and third time, recording both changes.","The valid promo is applied successfully and exactly once.
+Repeated clicks/applications do not duplicate or compound the discount.","SAVE10 initially showed a $291 discount and total $2,667. Repeated applications increased the discount to $583 and then $874, reducing the total to $2,375 and $2,084. The discount was not limited to one application.",FAIL,BUG-17
+TC-5.4-02,US-5.4,Reject invalid promo code,1. Promo code field is displayed.,"Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 1 Child, 1 Infant. Selected CJ 101, CoastJet Regional, 09:45–12:57, A319, $1,022 per adult. Test User (Adult), DOB 1990-01-15, passport QA1234567, expiry 2030-12-31, email rahaf.test@example.com, phone 0791234567. Synthetic QA identity. Test Child (Child), DOB 2016-01-15, passport QC1234567, expiry 2030-12-31. Test Infant (Infant), DOB 2025-12-01; no infant passport fields displayed. 0 bags; meals None; insurance off; no active promo; TEST.","1. Removed the prior promo and reselected None to restore the visible baseline to $2,958.
+2. Entered TEST and clicked Apply.
+3. Recorded the message, applied-code indicator and total.","The invalid promo code is not applied.
+A clear error is displayed.
+The booking price is not incorrectly discounted.","TEST was displayed as applied and produced the success message “Promo code applied!” rather than an error. The breakdown showed Promo TEST −$0.00 and the total remained $2,958.00.",FAIL,BUG-18
+TC-5.4-03,US-5.4,Remove promo and recalculate total,1. A valid SAVE10 promo is applied.,"Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 1 Child, 1 Infant. Selected CJ 101, CoastJet Regional, 09:45–12:57, A319, $1,022 per adult. Test User (Adult), DOB 1990-01-15, passport QA1234567, expiry 2030-12-31, email rahaf.test@example.com, phone 0791234567. Synthetic QA identity. Test Child (Child), DOB 2016-01-15, passport QC1234567, expiry 2030-12-31. Test Infant (Infant), DOB 2025-12-01; no infant passport fields displayed. 0 bags; meals None; insurance off; SAVE10 once, then removed.","1. Removed TEST and refreshed the displayed baseline via None: $2,958.
+2. Applied SAVE10 once and recorded $291 discount and $2,667 total.
+3. Clicked the ✕ beside SAVE10.
+4. Inspected the resulting breakdown without making another price change.",The promo discount is removed and the booking total is correctly recalculated to the appropriate non-discounted amount.,"Removing SAVE10 removed its applied label and discount line, but the total stayed at $2,667 instead of returning to $2,958. The remaining visible lines were Fares $2,913 and Taxes & fees $45 with zero extras.",FAIL,BUG-19
+TC-6.1-01,US-6.1,Accept valid payment details,"1. Payment page is displayed.
+2. Booking is ready for payment.","Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 1 Child, 1 Infant. Selected CJ 101, CoastJet Regional, 09:45–12:57, A319, $1,022 per adult. Test User (Adult), DOB 1990-01-15, passport QA1234567, expiry 2030-12-31, email rahaf.test@example.com, phone 0791234567. Synthetic QA identity. Test Child (Child), DOB 2016-01-15, passport QC1234567, expiry 2030-12-31. Test Infant (Infant), DOB 2025-12-01; no infant passport fields displayed. Seats Adult 1A, Child 1C; all extras zero; no promo. Card 4111 1111 1111 1111; name Test User; expiry 08/29; CVV 123; ZIP 94107. T&C checked.","1. Cleared the promo and refreshed the undiscounted total to $2,958.
+2. Continued to Payment and entered all five specified valid payment values.
+3. Checked the fare-rules/T&C checkbox.
+4. Clicked Pay now.",All valid payment details are accepted and payment can proceed successfully.,"The practice payment completed successfully and Booking confirmed displayed code BK-70-41 with total paid $2,958.00.",PASS,
+TC-6.1-02,US-6.1,"Validate required payment fields, expiry and CVV",1. Payment page is displayed.,"Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 0 Children, 0 Infants. CJ 101; Test User (Adult), DOB 1990-01-15, passport QA1234567, expiry 2030-12-31, email rahaf.test@example.com, phone 0791234567. Synthetic QA identity. Seat 1A; all extras zero; total $1,067; T&C checked. Valid baseline: Card 4111 1111 1111 1111; name Test User; expiry 08/29; CVV 123; ZIP 94107. A: all five fields blank, then populated card/expiry/CVV in sequence while name and ZIP stayed blank. B: expiry 01/20. C: expiry 0829. D: CVV 12. E: CVV 12345. F: CVV abc.","1. Built a fresh valid single-adult booking and opened blank Payment.
+2. Submitted all fields blank; recorded card validation.
+3. Entered valid card and resubmitted; recorded expiry validation.
+4. Entered 08/29 and resubmitted; recorded CVV validation.
+5. Entered CVV 123, leaving name and ZIP blank, and resubmitted.
+6. Built a new booking and submitted otherwise valid data with expiry 01/20.
+7. Built another booking and submitted expiry 0829; recorded rejection.
+8. Restored expiry to 08/29 and submitted CVV 12.
+9. Built new bookings separately for CVV 12345 and CVV abc; entered otherwise valid data, accepted T&C and submitted each.","Card number, name on card, expiry, CVV and ZIP are required.
+Expiry must be in valid MM/YY format and cannot be in the past.
+CVV must contain exactly 3–4 numeric digits.
+Invalid payment data is rejected with clear validation.","Blank card, expiry and CVV were rejected in sequence, but payment completed with both name and ZIP blank. Past expiry 01/20 and CVVs 12, 12345 and abc each completed a booking. Expiry 0829 was rejected with “Enter expiry as MM/YY.”",FAIL,"BUG-20, BUG-21, BUG-22"
+TC-6.2-01,US-6.2,Block payment until T&C are accepted,"1. Payment page is displayed.
+2. All payment fields contain otherwise valid values.","Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 0 Children, 0 Infants. CJ 101; Test User (Adult), DOB 1990-01-15, passport QA1234567, expiry 2030-12-31, email rahaf.test@example.com, phone 0791234567. Synthetic QA identity. Seat 1A; zero extras; Card 4111 1111 1111 1111; name Test User; expiry 08/29; CVV 123; ZIP 94107. T&C unchecked.","1. Started a new valid single-adult booking and reached Payment.
+2. Entered all valid payment fields and verified checkbox value 0 (unchecked).
+3. Clicked Pay now.
+4. Recorded completion; the test’s conditional retry after acceptance did not apply because booking had already completed.","Payment is blocked while T&C/fare rules are unchecked.
+Payment becomes eligible to proceed after acceptance.","Payment completed while the fare-rules/T&C checkbox was unchecked. Booking confirmed displayed BK-70-08 and total paid $1,067.00; no acceptance validation was shown.",FAIL,BUG-23
+TC-6.3-01,US-6.3,Verify complete booking price calculation,"1. Booking contains at least one Adult and one Child.
+2. Price breakdown is displayed.","Vellamar (VLM) → Halden Cross (HDX); one-way; departure 2026-09-28; Economy; 1 Adult, 1 Child, 0 Infants. CJ 101, $1,022 per adult. Test User (Adult), DOB 1990-01-15, passport QA1234567, expiry 2030-12-31, email rahaf.test@example.com, phone 0791234567. Synthetic QA identity. Test Child (Child), DOB 2016-01-15, passport QC1234567, expiry 2030-12-31. Seats 1A/1C; 0 bags; meals None; no insurance/promo.","1. Created the listed Adult/Child booking and inspected its passenger-stage breakdown.
+2. Entered valid details and assigned distinct seats.
+3. Continued through zero extras to Payment and inspected the final breakdown.
+4. Recorded every visible price line and added them arithmetically.
+5. Checked whether individual passenger fare lines and a tax-scaling basis were exposed.","Taxes and fees scale correctly.
+Each Child is billed the Child fare exactly once.
+The displayed booking total equals the sum of all displayed line items.","The displayed lines summed correctly: Fares $2,811 + Taxes & fees $45 + zero extras = Total $2,856. However, the UI exposed only aggregate Fares, with no individual Child fare or tax basis. Exact-once Child billing and correct tax scaling could not be verified without inferring hidden calculations, so the overall case is BLOCKED.",BLOCKED,
+TC-7.1-01,US-7.1,Generate unique confirmation codes,1. Two bookings can be completed within the same browser/session.,"Same live tab/session without reload between bookings. A: VLM→HDX 2026-09-28, Economy, CJ 101, 1 Adult+1 Child, seats 1A/1C, $2,856. B: same route/date/cabin/flight, 1 Adult, seat 1A, $1,067. Test User (Adult), DOB 1990-01-15, passport QA1234567, expiry 2030-12-31, email rahaf.test@example.com, phone 0791234567. Synthetic QA identity. Test Child (Child), DOB 2016-01-15, passport QC1234567, expiry 2030-12-31. Card 4111 1111 1111 1111; name Test User; expiry 08/29; CVV 123; ZIP 94107. T&C accepted; no extras/promo.","1. Completed Booking A with valid payment and recorded BK-70-39.
+2. Clicked Start a new booking without reloading or ending the session.
+3. Reduced Children from 1 to 0 and completed Booking B with valid details, seat and payment.
+4. Recorded BK-70-78 and compared it with Booking A.
+5. Opened Session bookings and verified both entries were present.","Booking A and Booking B have different confirmation codes.
+No two bookings in the same session share the same code.","Booking A received BK-70-39 and Booking B received BK-70-78 in the same uninterrupted session. The codes differed, and both appeared separately in Session bookings.",PASS,
+TC-7.2-01,US-7.2,Verify confirmation summary matches booking,1. A booking can be completed successfully.,"VLM→HDX; 2026-09-28; one-way Business; Northern Skyline NS 845, 09:05–17:07, 8h 02m, 1 stop, E195-E2, $1,557 per adult; 1 Adult+1 Child. Test User (Adult), DOB 1990-01-15, passport QA1234567, expiry 2030-12-31, email rahaf.test@example.com, phone 0791234567. Synthetic QA identity. Test Child (Child), DOB 2016-01-15, passport QC1234567, expiry 2030-12-31. Seats 3A/3B. One bag $35; Adult Vegan and Child Vegetarian meals $24; insurance $19; no promo. Card 4111 1111 1111 1111; name Test User; expiry 08/29; CVV 123; ZIP 94107. T&C accepted.","1. Started a new booking, selected Business and added one Child.
+2. Searched and recorded NS 845 itinerary; selected it.
+3. Entered valid Adult/Child details, selected available seats 3A and 3B.
+4. Added one bag, Vegan/Vegetarian meals and insurance.
+5. Recorded Payment total $4,405 and the cabin/passenger/route information.
+6. Entered valid payment, accepted T&C, completed booking and compared the confirmation.","The confirmation summary accurately displays the booked itinerary, passengers, cabin and total paid.
+The displayed total matches the completed booking charge.","Confirmation BK-70-82 displayed VLM→HDX, Mon, Sep 28, 1 adult(s), 1 child(ren), 0 infant(s), Business, and total paid $4,405.00. These matched the recorded booking route/date, passenger counts, cabin and pre-payment total.",PASS,
+TC-7.3-01,US-7.3,Clear previous data when starting a new booking,"1. A booking containing flight, passenger, seat, extras and payment selections has been completed.","Completed booking BK-70-82 from TC-7.2-01: VLM→HDX, 2026-09-28, one-way, Business, 1 Adult+1 Child, Test User/Test Child, seats 3A/3B, one bag, Vegan/Vegetarian meals, insurance on, valid payment, T&C checked. Fresh inspection data: Reset Adult, DOB 1991-02-16, passport QR1234567, expiry 2031-12-31, reset.test@example.com, 0791234568; Reset Child, DOB 2017-02-16, passport QR7654321, expiry 2031-12-31.","1. Recorded the completed booking’s selected values and clicked Start a new booking.
+2. Inspected search fields and passenger counts before making new selections.
+3. Submitted search and explicitly selected NS 845 to reach Passenger details; inspected the blank fields.
+4. Entered the listed new Reset identities only to reach later pages.
+5. Inspected Seat selection before assigning any seats; then assigned fresh 3A/3B to continue.
+6. Inspected Extras without adding extras, then continued to Payment and inspected all fields and T&C.","The previous flight, passenger, seat, extras and payment selections are cleared so the user starts with a fresh booking state.","Start a new booking retained the VLM→HDX route, 2026-09-28 departure, One-way trip, Business cabin, and counts of 1 Adult and 1 Child. Passenger identity/contact fields were blank, seats were unassigned (0/2), baggage was 0, meals were None, insurance was unchecked, promo was blank, all payment fields were blank and T&C was unchecked. The booking was only partially reset.",FAIL,BUG-24
