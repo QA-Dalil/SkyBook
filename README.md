@@ -93,6 +93,17 @@ The Jira work-item view shows the seven completed Epics and the reported defects
 The project summary shows 51 work items: 27 completed requirements and 24 open defects.
 
 ![Jira project summary](screenshots/jira-project-summary.png)
+
+### BUG-14 — Seat Completion Validation
+
+The booking contains two seat-holding passengers, while only the first passenger has seat 1D assigned.
+
+![BUG-14 passenger tabs and single seat assignment](screenshots/BUG-14-passenger-tabs-and-single-seat.png)
+
+Despite the counter showing `1/2 seated`, the **Continue to extras** button is enabled. It should remain disabled until every seat-holding passenger has an assigned seat.
+
+![BUG-14 continue button enabled at one of two seated](screenshots/BUG-14-continue-enabled-at-1-of-2-seated.png)
+
 ## Notes
 
 SkyBook is a fictional practice environment. No real payment was processed and all identity data used during testing was synthetic.
