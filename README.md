@@ -58,10 +58,41 @@ Jira and Zephyr screenshots can be added to the `screenshots/` folder. The live 
 
 ## Screenshots
 
-Add selected screenshots to the `screenshots/` folder, then replace this section with Markdown images such as:
+### Zephyr Test Case Library
 
-`![Zephyr test cycle](screenshots/test-cycle-summary.png)`
+The test library contains 37 approved test cases organized into folders that match the seven project Epics.
 
+![Zephyr Test Case Library](screenshots/zephyr-test-library.png)
+
+### Test Case Definition
+
+Each test case documents its objective, preconditions, priority, owner, and Epic-based folder organization.
+
+![Test case details](screenshots/test-case-details.png)
+
+### Requirement Traceability
+
+Zephyr coverage links each test case to the Jira Story it verifies.
+
+![Test case traceability](screenshots/test-case-traceability.png)
+
+### Step-by-Step Test Execution
+
+Execution evidence records each step separately with test data, expected result, actual result, timestamp, and status.
+
+![Passed test execution](screenshots/passed-test-execution.png)
+
+### Jira Epics and Bugs
+
+The Jira work-item view shows the seven completed Epics and the reported defects with their priorities and workflow status.
+
+![Jira Epics and Bugs](screenshots/jira-epics-and-bugs.png)
+
+### Jira Project Summary
+
+The project summary shows 51 work items: 27 completed requirements and 24 open defects.
+
+![Jira project summary](screenshots/jira-project-summary.png)
 ## Notes
 
 SkyBook is a fictional practice environment. No real payment was processed and all identity data used during testing was synthetic.

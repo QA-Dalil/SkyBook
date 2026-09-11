@@ -1,13 +1,16 @@
-# Screenshot Checklist
+# Screenshot Evidence
 
-Add your own screenshots to this folder. Recommended files:
+## Included
 
-1. `jira-backlog.png` — Epics and Stories in Jira.
-2. `zephyr-test-library.png` — Test Case Library showing the imported cases.
-3. `test-case-example.png` — One complete test case with separate steps, data, expected result, actual result, and status.
-4. `test-cycle-summary.png` — SkyBook_Round 1 execution summary.
-5. `failed-test-example.png` — One failed test execution.
-6. `bug-example.png` — One complete Jira bug with reproduction steps and links.
-7. `traceability-example.png` — Story → Test Case → Bug relationship.
+- Zephyr Test Case Library
+- Test Case details
+- Story-to-Test traceability
+- Step-by-step PASS execution
+- Jira Epics and Bugs list
+- Jira project summary
 
-Before publishing, crop out browser bookmarks, unrelated tabs, email addresses, notifications, or personal information.
+## Recommended additions
+
+- A step-by-step FAIL execution with the actual result visible
+- One complete Jira Bug showing reproduction steps, expected result, actual result, priority, and linked items
+- The SkyBook_Round 1 Test Cycle summary showing PASS, FAIL, and BLOCKED totals
